@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+
+<!-- Texte d'accroche ====================================================-->
+<div class="row">
+  <div class="col-lg-12 encart_titre  page-header" style="height: 500px;">
+  
+  <h2>Snowtricks, le site du surf</h2>
+  
+  </div>
+</div>
+
+
+
+
+<!-- flash modification_figure ====================================================-->
+{% for message in app.flashes('modification_figure') %}
+    <div class="flash-notice flash">
+        {{ message }}
+    </div>
+{% endfor %} 
+
+
+
+
+<!-- flash creation_figure ====================================================-->
+{% for message in app.flashes('creation_figure') %}
+    <div class="flash-notice flash">
+        {{ message }}
+    </div>
+{% endfor %} 
+
+
+
+
+<!-- Encarts figures ====================================================-->  
+{% for figure in figures %}
+<div class="col-lg-4 figure_min">
+
+	<img src="{{ asset(figure.image) }}" alt="Symfony!" />
+
+	<br>
+	
+	<h4 ><a href="/figure/{{ figure.id }}">{{ figure.name }}</a></h4><br>
+
+	{{ figure.difficulty }}
+		
+	<p><a class="btn btn-primary" href="http://localhost:8000/modifyfigure/{{ figure.id }}">Modifier</a></p>
+	
+	<p><a class="btn btn-primary" href="http://localhost:8000/deletefigure/{{ figure.id }}">Supprimer</a></p>
+
+</div>
+{% endfor %}    
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

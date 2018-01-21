@@ -1,0 +1,157 @@
+body {
+background-color:blue;
+background-image:url(../images/Extreme.jpg);
+background-size: 1500px;
+}
+
+
+.encart
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	background-color: coral;
+}
+
+.encart_titre
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	background-color: coral;
+	text-align: center;
+	vertical-align:middle;
+}
+
+.figure_min
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	background-color: coral;
+	height: 400px;
+	
+	margin: 100px;
+	
+	padding: 50px;
+	
+	
+	/* 
+	margin-right: 10px;
+	margin-top: 100px;
+	
+	padding-top: 50px;
+    padding-right: 30px;
+    padding-bottom: 50px;
+    padding-left: 80px;
+	
+ */
+	
+
+}
+
+
+.figure_big
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	background-color: coral;
+	height: 700px;
+}
+
+.flash
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	background-color: coral;
+	text-align : center;
+}
+
+
+.bandeau_lateral
+{
+	min-height : 1000px;
+	margin : 5px;
+	padding : 5px;
+	color : blue;
+	
+}
+
+
+
+.titre_central
+{
+	height : 200px;
+	text-align : center;
+	padding : 10px;
+	color : blue;
+}
+.espace
+{
+	height : 300px;
+}
+
+
+.commentaire
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+	color: blue;
+	margin : 5px;
+	padding : 5px;
+	background-color: coral;
+}
+
+
+ 
+/* Infobulle */
+ 
+#tooltip {
+    position:absolute;
+    z-index:9999;
+    
+    width:400px;
+    
+    color:red;
+    font-size:20px;
+    
+    
+    border: 3px blue solid;
+    border-radius: 10px;
+    background-color: black;
+    padding:10px;
+}
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

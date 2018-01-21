@@ -1,0 +1,38 @@
+body {
+background-color:blue;
+background-image:url(../images/IMG_0121.png);
+background-size: 1500px;
+}
+
+
+
+
+
+.encart
+{
+	border: 3px blue solid;
+	border-radius: 10px;
+}
+
+
+.bandeau_lateral
+{
+	min-height : 1000px;
+	
+	
+	
+}
+
+
+
+.titre_central
+{
+	height : 200px;
+	text-align : center;
+	padding : 10px;
+
+}
+.espace
+{
+	height : 200px;
+}

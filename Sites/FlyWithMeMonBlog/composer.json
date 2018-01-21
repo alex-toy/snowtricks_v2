@@ -1,0 +1,10 @@
+{
+    "name": "alex/twig",
+    "authors": [
+        {
+            "name": "alexei",
+            "email": "alexei.80@hotmail.fr"
+        }
+    ],
+    "require": {}
+}

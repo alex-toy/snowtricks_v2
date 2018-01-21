@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>delegate demo</title>
+  <style>
+  p {
+    background: yellow;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 5px;
+  }
+  p.over {
+    background: #ccc;
+  }
+  span {
+    color: red;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+
+
+
+
+<body>
+ 
+	<p id="boutonrajoutfilm">rajout film!</p>
+
+	<select id="select" class="form-control">
+		<option>Choix de l'action</option>
+		<option>Rajouter un film</option>
+		<option>Modifier un film</option>
+		
+	</select>
+
+
+
+
+
+ 
+<span></span>
+ 
+ 
+ 
+<script>
+
+$("body").delegate( "#select", "click", function(){
+  
+  		var value =  $(this).find("option:selected").text();
+  		
+  		if(value == "Choix de l'action")
+		{
+			$( this ).after( '<p id="choixaction">Choix de l\'action</p>' );
+			$( "body" ).delegate( "#choixaction", "click", function() {
+  				$( this ).after( '<p id="boutonrajoutparagraphe">rajout paragraph apres action!</p>' );
+			});
+			
+		}
+		else if(value == "Rajouter un film")
+		{
+  
+  			$( this ).after( '<p id="rajoutfilm">Rajouter un film</p>' );
+  
+  
+  		}
+  		else if(value == "Modifier un film")
+		{
+  			$( this ).after( '<p id="modiffilm">Modifier un film</p>' );
+  
+  
+  
+  		}
+  
+  		$( "body" ).delegate( "#rajoutfilm", "click", function() {
+  				$( this ).after( '<p id="boutonrajoutparagraphe">rajout paragraph apres film!</p>' );
+			});
+  
+  
+  
+});
+
+
+
+
+
+
+
+
+</script>
+ 
+</body>
+</html>
+
+
+
+    		
+    		
+    		
+    		
+    		

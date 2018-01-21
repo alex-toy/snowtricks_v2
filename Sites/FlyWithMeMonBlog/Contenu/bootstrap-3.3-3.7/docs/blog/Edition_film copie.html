@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Festival des Films de Plein Air-Edition d'un film</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="assets/js/jquery.js"></script>
+	<script src="jquery2.js"></script>
+    
+    
+  </head>
+
+<body>
+
+	<!-- Menu
+	================================================== -->
+	<div class="row">
+	<nav class="navbar navbar-inverse  navbar-fixed-top">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav">
+				<li><a href="/Users/alexei/Documents/OPENCLASSROOM/projet3/prototype/bootstrap-3.3-3.7/docs/examples/Festival/Festival.html">Accueil</a></li>
+				<li><a href="/Users/alexei/Documents/OPENCLASSROOM/projet3/prototype/bootstrap-3.3-3.7/docs/examples/Festival/Actualités.html">Actualités</a></li>
+				<li class="active"><a href="/Users/alexei/Documents/OPENCLASSROOM/projet3/prototype/bootstrap-3.3-3.7/docs/examples/Festival/Projections.html">Projections</a></li>
+			</ul>
+			<form class="navbar-form navbar-right inline-form">
+			<div class="form-group">
+				<input type="search" class="input-sm form-control" placeholder="Recherche">
+				<button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
+			</div>
+			</form>
+		</div>
+	</nav>
+	</div>
+	<div class="espacement"></div> 
+	
+	
+	
+	<!-- contenu de la page ==================================== -->
+	<div class="container">
+		
+		
+		<!-- encart de tête ================================================== -->
+		<div class="encart-titre col-lg-offset-1 col-lg-11"><h3 >Formulaire d'édition d'un film</h3></div>
+		
+	
+	
+		<!-- formulaire initial ====================================== -->
+		<div class="row"></div>
+		<div class="encart-titre col-lg-offset-1 col-lg-11 formulaire">
+			
+			<!-- choix de départ ================================================== -->
+			<div class="col-lg-offset-1 col-lg-11"><h3 >Que souhaitez-vous faire ?</h3></div>
+			
+			<div class="row">		
+			
+				<!-- cadre gauche ================= -->
+				<div class="col-lg-5">
+					<p>Eléments de description du film :</p>
+					<div class="input-group formulaire">
+						<input type="text" id="film" class="form-control" placeholder="titre du film" aria-describedby="basic-addon1">
+						<input type="text" id="réalisateur" class="form-control" placeholder="Nom du réalisateur" aria-describedby="basic-addon1">
+						<input type="text" id="résumé" class="form-control" placeholder="Résumé du film" aria-describedby="basic-addon1" rows=4 cols=40 >
+			
+						<TEXTAREA name="Résumé du film" rows=4 cols=40>Résumé du film</TEXTAREA>
+					</div>
+				</div>
+	
+
+				<!-- cadre droit ================= -->
+				<div class="col-lg-offset-1 col-lg-6">
+					<!-- édition séance ================= -->
+					<div class="col-lg-5 app">
+						
+						<p>Rajouter une séance :</p>
+						<div class="input-group formulaire">
+							<input type="text" id="date" class="form-control" placeholder="date" aria-describedby="basic-addon1">
+							<input type="text" id="heure" class="form-control" placeholder="heure" aria-describedby="basic-addon1">
+							<input type="text" id="lieu" class="form-control" placeholder="lieu" aria-describedby="basic-addon1" rows=4 cols=40 >
+						</div>
+						
+						<!-- bouton ================= -->
+						<a class="btn btn-primary">Rajouter une séance</a> 
+						
+		 
+												
+					</div>
+				
+				
+				</div>
+				
+				
+			</div>
+		
+			<!-- bouton ================= -->
+			<a class="btn btn-primary" disabled = "true">Créer un film</a>
+			
+			
+			
+			<!-- 
+<a class="btn btn-primary" href="/Users/alexei/Documents/OPENCLASSROOM/projet3/prototype/bootstrap-3.3-3.7/docs/examples/Festival/Film_créé.html">Créer un film</a> 	
+		 
+ -->
+		
+		</div>
+	
+	
+	
+	
+	
+	
+	
+	
+		<!-- formulaire rajout de séance ====================================== -->
+		<div class="row"></div>
+		<div class="encart-titre col-lg-offset-1 col-lg-11 formulaire">
+			<div class="row">		
+			
+				<!-- cadre gauche ================= -->
+				<div class="col-lg-5">
+					<p>Eléments de description du film :</p>
+					<div class="input-group formulaire">
+						<input type="text" id="film" class="form-control" placeholder="titre du film" aria-describedby="basic-addon1">
+						<input type="text" id="réalisateur" class="form-control" placeholder="Nom du réalisateur" aria-describedby="basic-addon1">
+						<input type="text" id="résumé" class="form-control" placeholder="Résumé du film" aria-describedby="basic-addon1" rows=4 cols=40 >
+			
+						<TEXTAREA name="Résumé du film" rows=4 cols=40>Résumé du film</TEXTAREA>
+					</div>
+				</div>
+	
+
+				<!-- cadre droit ================= -->
+				<div class="col-lg-offset-1 col-lg-6">
+					<!-- édition séance ================= -->
+					<div class="col-lg-5 app">
+						
+						<p>Rajouter une séance :</p>
+						<div class="input-group formulaire">
+							<input type="text" id="date" class="form-control" placeholder="date" aria-describedby="basic-addon1">
+							<input type="text" id="heure" class="form-control" placeholder="heure" aria-describedby="basic-addon1">
+							<input type="text" id="lieu" class="form-control" placeholder="lieu" aria-describedby="basic-addon1" rows=4 cols=40 >
+						</div>
+						
+						<!-- bouton ================= -->
+						<a class="btn btn-primary">Rajouter une séance</a> 
+						
+		 
+												
+					</div>
+				
+				
+				</div>
+				
+				
+			</div>
+		
+			<!-- bouton ================= -->
+			<a class="btn btn-primary" disabled = "true">Créer un film</a>
+			
+			
+			
+			<!-- 
+<a class="btn btn-primary" href="/Users/alexei/Documents/OPENCLASSROOM/projet3/prototype/bootstrap-3.3-3.7/docs/examples/Festival/Film_créé.html">Créer un film</a> 	
+		 
+ -->
+		
+		</div>				
+			
+							
+	</div> 
+         
+         
+    
+    
+    
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
