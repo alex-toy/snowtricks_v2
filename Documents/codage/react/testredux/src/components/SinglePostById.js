@@ -17,19 +17,6 @@ import CategoriesView from './CategoriesView'
 class SinglePostById extends Component {
 
 	
-	componentDidMount() {
-		
-		var arraypoststemp = Object.entries(this.props.posts)
-	
-	console.log('arraypoststemp', arraypoststemp)
-	
-	var singlePost = arraypoststemp.filter( id_post => id_post[0].toString() ===  this.props.postId.toString())
-	
-	console.log('singlePost', singlePost.length)
-		
-
-		
-	}
 	
 	
   render() {
@@ -43,7 +30,6 @@ class SinglePostById extends Component {
 	
 	console.log('singlePost', singlePost.length)
 	
-	if(singlePost[1] == "undefined"){
 	return(
   	<div>
   	
@@ -53,31 +39,13 @@ class SinglePostById extends Component {
 							
 							<h1>Post detail view : </h1>
 							
-							
-							
-							
-						</div>
-				</div>
-        	</div>
-        
-  	
-  	</div>
-  	);}else{
-  	return(
-  	<div>
-  	
-        <div className="app">
-					<div className="list-books">
-						<div className="list-books-content">
-							
-							<h1>Post detail view test: </h1>
-							
+							{/*
 							title : {singlePost[1].title} <br />
 							author : {singlePost[1].author} <br />
 							body : {singlePost[1].body} <br />
-							category : {singlePost[1].category}
+							category : {singlePost[1].category}  */}
 							
-							
+
 						</div>
 				</div>
         	</div>
@@ -85,19 +53,6 @@ class SinglePostById extends Component {
   	
   	</div>
   	);
-  	
-  	
-  	
-  	
-  	}
-	
-	
-	
-	
-  	
-  	
-  	
-  	
   	
   	
   	}
