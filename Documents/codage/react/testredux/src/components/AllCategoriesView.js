@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
-import  { addCategory } from '../actions/actions'
-
-import CommentList from './CommentList'
 
 
 class AllCategoriesView extends Component {
@@ -13,10 +8,6 @@ class AllCategoriesView extends Component {
     
     
     const {arraycat, arrayposts} = this.props
-  	
-
-  	const listcategories = arraycat.map( cat => <option value={cat.name}>{cat.name}</option> );
-  	
   	
   	
     return (

@@ -9,7 +9,7 @@ import  { addPost, addCategory } from '../actions/actions'
 
 
 class AddPostForm extends Component {
-
+	
 	
 	
 	storePosts = (data) => {
@@ -22,30 +22,31 @@ class AddPostForm extends Component {
   			method: "POST",
   			body: JSON.stringify(data)
 		})
-		.then( rep => console.log(rep.status) )
+		.then( rep => rep.json() )
+		.then( data => this.props.AddPost(data.id, data.title, data.author, data.body, data.category, data.timestamp) )
 		.catch(error =>  console.log(error));
 	}
 	
 	
-	ID = () => {
-		return '_' + Math.random().toString(36).substr(2, 9);
-	}
+	ID = () => { return '_' + Math.random().toString(36).substr(2, 9); }
 	
 	
 	handleSubmit = (e) => {
 		e.preventDefault()
 		const values = serializeForm(e.target, { hash: true })
 		var randomid = this.ID()
+		var postedOn = Date.now()
 		this.storePosts({
 			id: randomid,
-			timestamp: Date.now(),
+			timestamp: postedOn,
+			title: values.title,
 			body: values.body,
 			author: values.author,
 			category: values.category
 		})
-		this.props.AddPost(randomid, values.title, values.author, values.body, values.category)
 	}
 	
+
 	
 	fetchCategories = () => {
 		fetch( 
@@ -78,7 +79,7 @@ class AddPostForm extends Component {
   	var arraycat = Object.values(categories)
   	
   	
-  	const listcategories = arraycat.map( cat => <option value={cat.name}>{cat.name}</option> );
+  	const listcategories = arraycat.map( cat => <option key={cat.name} value={cat.name}>{cat.name}</option> );
   	
   	
   	
@@ -86,7 +87,7 @@ class AddPostForm extends Component {
 	
 		<div className="AddPostForm">
     	<form onSubmit={(e) => this.handleSubmit(e)} className='create-contact-form'>
-		<label>add a post</label>
+		<label>Add a post</label>
 		  <div className='create-contact-details'>
 		  	<input className='postInput' type='text' name='title' placeholder='title'/><br />
 			<input className='postInput'  type='text' name='author' placeholder='author'/><br />
@@ -123,8 +124,8 @@ function mapStateToProps ({
 
 const mapDispatchToProps = dispatch => ({
 	
-	AddPost: (rndid, newtitle, newauthor, newbody, newcategory) => {
-  		dispatch(addPost ({ newid : rndid, newtitle : newtitle, newauthor : newauthor, newbody : newbody, newcategory : newcategory }))
+	AddPost: (rndid, newtitle, newauthor, newbody, newcategory, newtimestamp) => {
+  		dispatch(addPost ({ newid : rndid, newtitle : newtitle, newauthor : newauthor, newbody : newbody, newcategory : newcategory, timestamp : newtimestamp }))
 	},
 	
 	addCategory: (name, path) => { dispatch(addCategory({ name : name, path : path })) }

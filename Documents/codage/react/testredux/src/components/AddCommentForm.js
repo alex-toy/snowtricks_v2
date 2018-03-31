@@ -10,9 +10,7 @@ import  { addComment } from '../actions/actions'
 class AddCommentForm extends Component {
 
 	
-	ID = () => {
-		return '_' + Math.random().toString(36).substr(2, 9);
-	}
+	ID = () => { return '_' + Math.random().toString(36).substr(2, 9); }
 	
 	
 	
@@ -27,35 +25,34 @@ class AddCommentForm extends Component {
   			body: JSON.stringify(data)
 		})
 		.then( rep => rep.json() )
+		.then( data => this.props.AddComment(data.id, data.parentId, data.author, data.voteScore, data.body, data.timestamp) ) 
 		.catch(error =>  console.log(error));
 	}
 	
-	
-	
+
 	
 	handleSubmit = (e, postId) => {
 		e.preventDefault()
 		const values = Object.assign( {}, serializeForm(e.target, { hash: true }), postId )
 		var randomid = this.ID()
+		var postedOn = Date.now()
 		this.storeComment({
 			id: randomid,
-			timestamp: Date.now(),
+			timestamp: postedOn,
 			body: values.body,
 			author: values.author,
 			parentId: values.postId
 		})
-		this.props.AddComment(randomid, values.postId, values.author, values.body)
+		this.props.AddComment(randomid, values.postId, values.author, values.body, values.timestamp)
 	}
 	
 	
-  
+	
   
   render() {
     
     
-    const {posts, postId} = this.props
-  	
-  	var arrayposts = Object.keys(posts)
+    const { postId } = this.props
   	
     return (
 	<div>
@@ -101,9 +98,9 @@ function mapStateToProps ({
 
 const mapDispatchToProps = dispatch => ({
 	
-	AddComment: (rndid, newparentId, newauthor, newbody) => { 
+	AddComment: (rndid, newparentId, newauthor, newscore, newbody, timestamp) => { 
   		
-  		dispatch(addComment({ newid : rndid, newparentId : newparentId, newauthor : newauthor, newbody : newbody }))
+  		dispatch(addComment({ newid : rndid, newparentId : newparentId, newauthor : newauthor, newbody : newbody, timestamp : timestamp }))
 	}
 	
 });

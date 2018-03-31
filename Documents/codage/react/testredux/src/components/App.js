@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route, Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import  { addPost, addComment } from '../actions/actions'
-
-
-import PostdetailView from './PostdetailView'
-import AddPostBox from './AddPostBox'
-import BigHeader from './BigHeader'
-
-import ReduxCategoriesView from './ReduxCategoriesView'
-import SinglePost from './SinglePost'
 import Params from './Params'
-
-
-
 
 
 
@@ -22,37 +11,19 @@ class App extends Component {
 
 
 	state = {
-		foodModalOpen: false,
-		postModalOpen: false,
-		food: null,
-		ingredientsModalOpen: false,
-		loadingFood: false,
+		loadingPost: false,
 		posts : null,
-		Idarray : []
+		Idarray : [],
+		postModalOpen: false,
 	  }
 	  
 	  
-	openPostModal = () => {
-		this.setState(() => ({
-		  postModalOpen: true,
-		  foodModalOpen: false
-		}))
-	  }
-	  
+	openPostModal = () => { console.log('ici'); this.setState( () => ({ postModalOpen: true })) }
 	
-	openIngredientsModal = () => this.setState( () => ({ ingredientsModalOpen: true }))
   
   
-  
-	closePostModal = () => {
-		this.setState(() => ({
-		  postModalOpen: false,
-		  meal: null,
-		  day: null,
-		  food: null,
-		}))
-	  }
-
+	closePostModal = () => { this.setState(() => ({ postModalOpen: false })) }
+	    
 	
 	storeComment = (data) => {
 		fetch('http://localhost:3001/comments', {
@@ -84,32 +55,6 @@ class App extends Component {
 	
 	
 	
-	fetchPostsByIdold = (postId) => {
-		fetch( 'http://localhost:3001/posts/' + postId, { 
-			headers: { 
-				'Accept' : 'application/json',
-  				'Authorization': 'whatever-you-want',
-  				'Content-Type' : 'application/json'
-			},
-			method: "GET",
-			})
-		.then( rep => rep.json())
-		.then(data => 
-			
-			Object.entries(data).map( obj => this.props.dispatch(addPost(
-			{
-				newid : obj[1].id, 
-				newtitle : obj[1].title, 
-				newauthor : obj[1].author, 
-				newbody : obj[1].body,
-				newparentId : obj[1].parentId
-			}))
-			
-		)).then( rep => console.log('fetchPostsById : ', rep) )
-	}
-	
-	
-	
 	fetchPostsById = (postId) => {
 		fetch( 'http://localhost:3001/posts/' + postId, { 
 			headers: { 'Authorization': 'whatever-you-want' },
@@ -118,7 +63,7 @@ class App extends Component {
 	}
 	
 	
-	
+
 	
 	fetchComments = (idPost) => {
 	
@@ -131,24 +76,27 @@ class App extends Component {
 			{
 				newid : obj[1].id, 
 				newtitle : obj[1].title, 
-				newauthor : obj[1].author, 
+				newauthor : obj[1].author,
+				newscore : obj[1].voteScore,
 				newbody : obj[1].body,
-				newparentId : obj[1].parentId
+				newparentId : obj[1].parentId,
+				timestamp : obj[1].timestamp
 			}))
 			
 		));
 	}
 	
 	
-	
+
 
 	fetchPosts = () => {
 		fetch( 
 			'http://localhost:3001/posts', 
 			{ headers: { 'Authorization': 'whatever-you-want' },
 			method: "GET",
-		 }
-		).then( rep => rep.json()).then(data => 
+		 })
+		.then( rep => rep.json())
+		.then(data => 
 			Object.entries(data).map( obj => this.props.dispatch(addPost(
 			{
 				newid : obj[1].id, 
@@ -172,14 +120,12 @@ class App extends Component {
 		})
 		.then( rep => rep.json() )
 		.then( data =>  data.map( post => post.id ))
-		.then( data =>  data.map( postid => { this.setState({ Idarray : this.state.Idarray.concat(postid)}); } ))
+		.then( data =>  data.map( postid => this.setState({ Idarray : this.state.Idarray.concat(postid)}) ))
 	}
 	
 	
 	
-	ID = () => {
-		return '_' + Math.random().toString(36).substr(2, 9);
-	}
+	ID = () => { return '_' + Math.random().toString(36).substr(2, 9); }
 	
 	
 	
@@ -204,36 +150,14 @@ class App extends Component {
 
 
   render() {
-  
-	const { foodModalOpen, postModalOpen, loadingFood, food, ingredientsModalOpen, Idarray } = this.state
 	
-  	
   	return(
-  	<div>
-  	
-  		<BigHeader openIngredientsModal={this.openIngredientsModal} />
+  	<div className="container">
+  		
   		
   		<Params />
   		
   		
-  		<button
-			className='input-group-button'
-            onClick={this.openPostModal}>
-        	Add post
-    	</button>
-  		
-  		
-
-        <AddPostBox 
-        	
-        	closePostModal={this.closePostModal}
-        	
-    		postModalOpen={postModalOpen}
-    		
-        />
-        
-
-  	
   	</div>
   	);}
 }

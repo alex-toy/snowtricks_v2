@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import  { changePost } from '../actions/actions'
+import  { changeComment } from '../actions/actions'
 
 
 class VoteScoreForm extends Component {
@@ -12,50 +12,55 @@ class VoteScoreForm extends Component {
 	}
 	
 	
-	increaseVote = (postId) => {
-		fetch('http://localhost:3001/posts/' + postId, {
+	
+	increaseVote = (commentId, score) => {
+	
+		fetch('http://localhost:3001/comments/' + commentId, {
   			headers: { 
   				'Accept' : 'application/json',
   				'Authorization': 'whatever-you-want',
   				'Content-Type' : 'application/json' 
   			},
-  			method : "POST",
-  			body : JSON.stringify({ option : "upVote"})
+  			method : "PUT",
+  			body : JSON.stringify({ voteScore : score})
 		})
 		.then( rep => rep.json() )
-		.then( data => this.props.IncreaseVote(data.id, data.voteScore ) )
+		.then( data => this.props.IncreaseVote(data.id, data.voteScore) )
+		
 	}
 	
+	
+	decreaseVote = (commentId, score) => {
+	
+		fetch('http://localhost:3001/comments/' + commentId, {
+  			headers: { 
+  				'Accept' : 'application/json',
+  				'Authorization': 'whatever-you-want',
+  				'Content-Type' : 'application/json' 
+  			},
+  			method : "PUT",
+  			body : JSON.stringify({ voteScore : score})
+		})
+		.then( rep => rep.json() )
+		.then( data => this.props.IncreaseVote(data.id, data.voteScore) )
+		
+	}
+	
+
 	
 	
 	handleIncreaseScore = () => {
-		this.increaseVote(this.props.postId)
+		this.increaseVote(this.props.commentId, this.props.voteScore + 1)
 		this.setState({ score : this.props.voteScore + 1 })
-  		console.log(this.state.score)
 	}
-	
-	
-	
-	decreaseVote = (postId) => {
-		fetch('http://localhost:3001/posts/' + postId, {
-  			headers: { 
-  				'Accept' : 'application/json',
-  				'Authorization': 'whatever-you-want',
-  				'Content-Type' : 'application/json' 
-  			},
-  			method : "POST",
-  			body : JSON.stringify({ option : "downVote"})
-		})
-		.then( rep => rep.json() )
-		.then( data => this.props.IncreaseVote(data.id, data.voteScore ) )
-	}
-	
 	
 	
 	handleDecreaseScore = () => {
-		this.decreaseVote(this.props.postId)
+		this.decreaseVote(this.props.commentId, this.props.voteScore - 1)
 		this.setState({ score : this.props.voteScore - 1 })
 	}
+	
+	
 	
 	
 	
@@ -78,23 +83,20 @@ class VoteScoreForm extends Component {
   render() {
     
     
-    const {postId} = this.props
+    const {commentId} = this.props
     
   	
-  	
     return (
-
-            
+          
 		<div className="encart" style={{width:250}}>
-			<button type="button" onClick={() => this.handleIncreaseScore(postId)}>Increase</button>
+			<button type="button" onClick={() => this.handleIncreaseScore(commentId)}>Increase</button>
 			
 				Score : {this.props.voteScore}
 			
-			<button type="button" onClick={() => this.handleDecreaseScore(postId)}>Decrease</button>
+			<button type="button" onClick={() => this.handleDecreaseScore(commentId)}>Decrease</button>
 			
 			
 		</div>
-
 
         
     )
@@ -125,7 +127,7 @@ const mapDispatchToProps = dispatch => ({
 	
 	IncreaseVote: (id, newscore) => { 
   		
-  		dispatch(changePost({ id : id, param : 'voteScore', newValue : newscore}))
+  		dispatch(changeComment({ id : id, param : 'voteScore', newValue : newscore}))
 	}
 	
 	

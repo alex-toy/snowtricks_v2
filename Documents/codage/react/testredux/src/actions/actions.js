@@ -45,13 +45,15 @@ export function removePost ({ id }) {
 
 
 export const ADD_COMMENT = 'ADD_COMMENT'
-export function addComment ({ newid, newparentId, newauthor, newbody }) {
+export function addComment ({ newid, newparentId, newauthor, newscore, newbody, timestamp }) {
   return {
     type: ADD_COMMENT,
 	newid, 
 	newparentId, 
 	newauthor, 
-	newbody
+	newscore, 
+	newbody,
+	timestamp
   }
 }
 
@@ -71,15 +73,7 @@ export function changeComment ({ id, param, newValue }) {
 
 
 
-export const ADD_RECIPE = 'ADD_RECIPE'
-export function addRecipe ({ day, recipe, meal }) {
-  return {
-    type: ADD_RECIPE,
-    recipe,
-    day,
-    meal,
-  }
-}
+
 
 
 

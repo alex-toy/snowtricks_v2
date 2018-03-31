@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route, Link } from "react-router-dom";
-
-import  { addComment } from '../actions/actions'
-
-import PostList from './PostList'
-import PostdetailView from './PostdetailView'
-
-import BigHeader from './BigHeader'
-import CategoriesView from './CategoriesView'
+import { Link } from "react-router-dom"
 import CommentList from './CommentList'
 
 

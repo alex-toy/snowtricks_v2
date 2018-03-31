@@ -42,12 +42,12 @@ const postReducer = (posts={}, action) => {
 
 const commentsReducer = (comments={}, action) => {
 
-	const {id, param, newValue, newauthor, newbody, newid, newparentId } = action
+	const {id, param, newValue, newauthor, newbody, newid, newparentId, newscore, timestamp } = action
 	
 	switch(action.type) {
 			
 		case ADD_COMMENT:
-			return Object.assign({}, comments, {[newid] :  {parentId: newparentId, author: newauthor, body: newbody} })
+			return Object.assign({}, comments, {[newid] :  {parentId: newparentId, author: newauthor, voteScore: newscore,  body: newbody,  timestamp: timestamp} })
 			
 		case CHANGE_COMMENT:
 			return { ...comments, [id] : { ...comments[id], [param] : newValue } }

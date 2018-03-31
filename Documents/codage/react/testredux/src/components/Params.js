@@ -1,31 +1,53 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ReduxCategoriesView from './CategoriesView'
+import { BrowserRouter as Router, Route } from "react-router-dom"
 import { connect } from 'react-redux'
 import CategoriesView from './CategoriesView'
 import PostList from './PostList'
-import SinglePost from './SinglePost'
 import SinglePostById from './SinglePostById'
-
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink } from 'reactstrap';
+  
+  
+  
 
 const Params = () => (
   <Router>
     <div>
-      <h2>Accounts</h2>
-      <ul>
-        <li>
-          <Link to="/category/redux">redux</Link>
-        </li>
-        <li>
-          <Link to="/category/react">react</Link>
-        </li>
-        <li>
-          <Link to="/category/udacity">udacity</Link>
-        </li>
-        <li>
-          <Link to="/">root</Link>
-        </li>
-      </ul>
+      	
+		<Navbar className="AddCommentForm" color="faded" light expand="md">
+          <NavbarBrand href="/">Readable</NavbarBrand>
+          <NavbarToggler />
+          <Collapse  navbar>
+            <Nav className="ml-auto" navbar>
+              
+              <NavItem>
+                <NavLink href="/category/redux">redux</NavLink>
+              </NavItem>
+              
+              <NavItem>
+                <NavLink href="/category/react">react</NavLink>
+              </NavItem>
+              
+              <NavItem>
+                <NavLink href="/category/udacity">udacity</NavLink>
+              </NavItem>
+              
+               <NavItem>
+                <NavLink href="/">root</NavLink>
+              </NavItem>
+              
+            </Nav>
+          </Collapse>
+        </Navbar>
+      
+      
+      
 
       <Route exact path="/" component={root} />
       
@@ -63,8 +85,11 @@ const root = ({ match }) => (
    
     
    <PostList />
-    
-    
+   
+   
+  
+   
+   
   </div>
 );
 
@@ -72,14 +97,8 @@ const root = ({ match }) => (
 
 const post = ({ match }) => (
   <div>
-   <h3>postId : {match.params.id}</h3>
-   
-   
    
    <SinglePostById postId={match.params.id} />
-    
-	
-
     
   </div>
 );

@@ -1,27 +1,25 @@
 import React, { Component } from 'react'
+import { Button } from 'reactstrap';
 import { connect } from 'react-redux'
 import serializeForm from 'form-serialize'
 
 import  { addComment, removePost } from '../actions/actions'
-import { Route, Link } from "react-router-dom";
-import CommentList from './CommentList'
-import AddCommentForm from './AddCommentForm'
-import AddPostForm from './AddPostForm'
+import { Link } from "react-router-dom"
 import SelectSortMethod from './SelectSortMethod'
 import VoteScoreForm from './VoteScoreForm'
-import SinglePost from './SinglePost'
-import PostdetailView from './PostdetailView'
+import AddPostModal from './AddPostModal'
+import Modal from 'react-modal'
 
-
-
+ Modal.setAppElement('body');
 
 class PostList extends Component {
 
 	
 	state = {
 		postid : "",
-		sortmethod : "voteScore"
+		sortmethod : "voteScore",
 	}
+
 	
 	
 	storeComment = (data) => {
@@ -79,7 +77,21 @@ class PostList extends Component {
 	}
 	
 	
-  
+	
+	formattedPostdate = (timestamp) => {
+  		var a = new Date(timestamp);
+  		var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  		var year = a.getFullYear();
+		var month = months[a.getMonth()];
+		var date = a.getDate();
+		var hour = a.getHours();
+		var min = a.getMinutes();
+		var sec = a.getSeconds();
+		var time = date + ' ' + month + ' ' + year + ' at ' + hour + ':' + min + ':' + sec ;
+		return time;
+	}
+	
+	
   
   render() {
     
@@ -114,31 +126,34 @@ class PostList extends Component {
     	<SelectSortMethod handleSelectSortMethod={this.handleSelectSortMethod} />
     	
     	
+    	
+    	
+    	<AddPostModal />
+    	
+    	
     	<ul>{sortedposts.map((id_post) => 
-    		<div className="post">
+    		<div className="post" key={id_post[0]}>
 
     		<li key={id_post[0]}> 
     			title : {id_post[1].title} <br/> 
     			body : {id_post[1].body} <br/>
     			author : {id_post[1].author} <br/> 
     			category : {id_post[1].category} <br/>
-    			voteScore : {id_post[1].voteScore} <br/>
-    			timestamp : {id_post[1].timestamp} <br/> 
-    			id : {id_post[0]}<br/> 
-    		
+    			Posted on {this.formattedPostdate(id_post[1].timestamp)} <br/>
+    			
+    			<VoteScoreForm postId={id_post[0]} voteScore={id_post[1].voteScore} /><br/> 
+    			
 				
-				<button onClick={() => this.handleDeletePost(id_post[0])} className='commentInputButton'>Delete Post</button><br/> 
+				<Button onClick={() => this.handleDeletePost(id_post[0])} color="danger">Delete Post</Button>
 				
 				
-				
-				<VoteScoreForm postId={id_post[0]} voteScore={id_post[1].voteScore} /><br/> 
-                
-                                
-                <Link to={'/posts/' + id_post[0]}>See that post</Link>
-                
+                <button color="primary">               
+                	<Link to={'/posts/' + id_post[0]}>See that post</Link>
+                </button>
                 
 
     		</li>
+    		
     		
 
     		</div>)}
