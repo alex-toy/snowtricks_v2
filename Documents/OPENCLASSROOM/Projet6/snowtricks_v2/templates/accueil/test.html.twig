@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Snowtricks - test{% endblock %}
+
+
+
+{% block body %}
+
+    <div>images before</div>
+    
+
+    </br>
+	
+	
+    <div>images after</div>
+    {% for image in images %}
+        <li>{{ image.id }}
+            {% if image.isMasterImage %}
+                ismaster
+            {% else %}
+                isnotmaster
+            {% endif %}
+
+        </li>
+    {% endfor %}
+
+	
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

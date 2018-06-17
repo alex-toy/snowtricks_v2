@@ -1,0 +1,213 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Snowtricks - figure :  {{ figure.name }}{% endblock %}
+
+
+
+
+{% block presentation %}
+{% include 'accueil/other/accroche_v2.html.twig' %}
+{% endblock %}
+
+
+
+{% block body %}
+
+
+
+
+<header class="masthead">
+      
+    
+    <div class="container h-100">
+        
+        <div class="row h-100">
+          <div class="col-lg-7 my-auto">
+            <div class="header-content mx-auto">
+                            
+   
+    
+    
+         
+                
+                
+                
+                
+                
+<div class="whole-wrap pb-100">
+	<div class="container">
+        
+        {% for tag in figure.tags %}
+        <div class="container">
+            {% if loop.index is even %}
+                <div class="section-top-border text-right">
+						<h3 class="mb-30">étape {{ loop.index }}</h3>
+						<div class="row">
+							<div class="col-md-8">
+								<p class="text-right">{{ tag.explanation }}</p>
+							</div>
+							<div class="col-md-4">
+								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
+							</div>
+						</div>
+					</div>
+            {% else %}
+            <div class="section-top-border">
+						<h3 class="mb-30">étape : {{ loop.index }}</h3>
+						<div class="row">
+							<div class="col-md-4">
+								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
+							</div>
+							<div class="col-md-8 mt-sm-20">
+								<p>{{ tag.explanation }}</p>
+							</div>
+						</div>
+					</div>
+            {% endif %}
+            {% if app.session.get('sessionId') %}
+            
+            {% if removetagformviews[tag.id] is defined %}
+                 {{ form_start(removetagformviews[tag.id]) }}
+                      {{ form_row(removetagformviews[tag.id].save) }}
+                 {{ form_end(removetagformviews[tag.id]) }}
+            {% endif %}
+            
+            
+            <div onclick="{{'hideAndShow_'~tag.id~'()'}}" class="button-group-area mt-40"><a class="genric-btn info circle">Show modification form</a></div>
+            
+
+            <div id="{{'modifytagform'~tag.id}}" style="display:none;">
+            {{ form_start(modifytagformviews['modif'~tag.id]) }}
+                    {{ form_row(modifytagformviews['modif'~tag.id].explanation) }}
+                    {{ form_row(modifytagformviews['modif'~tag.id].image) }}
+                    {{ form_row(modifytagformviews['modif'~tag.id].save) }}
+            {{ form_end(modifytagformviews['modif'~tag.id]) }}
+            </div>
+
+            <script>
+            function {{'hideAndShow_'~tag.id~'()'}} {
+                var x = document.getElementById("{{'modifytagform'~tag.id}}");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+            </script>
+            
+            
+            
+            {% endif %}
+		</div>
+        {% endfor %}
+        
+        
+    
+      
+        
+   </div> 
+</div>
+                
+                <br>
+	
+
+	             
+                
+                
+
+
+                  
+            
+              </div>
+          </div>
+         
+        </div>
+      </div>
+</header>
+
+
+
+	
+
+<!-- Start comment-sec Area -->
+<section class="comment-sec-area pt-80 pb-80">
+    <div class="container">
+        <div class="row flex-column">
+            <h5 class="text-uppercase pb-80">Comments : </h5>
+            <br>
+
+            {% for comment in comments %}
+            <div class="comment-list">
+            <div class="single-comment justify-content-between d-flex">
+                <div class="user justify-content-between d-flex">
+                    <div class="thumb">
+                        <img src="/uploads/images/{{ comment.snowboarder.portrait }}" alt=""  />
+                    </div>
+                    <div class="desc">
+                        <h5><a href="#">{{ comment.snowboarder.name }}</a></h5>
+                        <p class="date">{{ comment.dateCreation|date("d/m/Y \\a\\t h:m:s") }}</p>
+                        <p class="comment">
+                            {{ comment.contenu }}
+                        </p>
+                    </div>
+                </div>
+                <div class="reply-btn">
+                       <a href="" class="btn-reply text-uppercase">reply</a> 
+                </div>
+            </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>    
+</section>
+<!-- End comment-sec Area -->
+
+
+
+
+
+
+<!-- Start commentform Area -->
+{% if app.session.get('sessionId') %}
+<section class="commentform-area  pb-120 pt-80 mb-100">
+    <div class="container">
+        <h5 class="text-uppercas pb-50">Add a comment</h5>
+        <div class="row flex-row d-flex">
+            <div class="col-lg-6">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                
+                
+                {{ form_label(form.contenu, 'Your message', { 'label_attr': {'class': 'form-control mb-10'} }) }}
+                {{ form_errors(form.contenu) }}
+                
+                
+                {{ form_widget(form.contenu, {'attr': {'class': 'primary-btn mt-20'}}) }}
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>    
+</section>
+{% else %}
+    <div class="col-lg-12 encart">
+        <p>Connectez-vous pour pouvoir poster un commentaire.</p>
+    </div>
+{% endif %}                
+<!-- End commentform Area -->
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
