@@ -12,6 +12,7 @@ use App\Form\CommentType;
 use App\Form\AddTagToFigureType;
 use App\Form\RemoveTagType;
 use App\Form\ModifyTagType;
+use App\Form\SearchType;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,163 +31,13 @@ class FigureController extends Controller
     public function index(){
           
         $repository = $this->getDoctrine()->getRepository(Figure::class);
-		$figures = $repository->findAll();
+		$figures = $repository->findAll(['createdAt' => 'ASC']);
 		
-		
-        return $this->render('accueil/figures.html.twig', 
+		return $this->render('accueil/figures.html.twig', 
 		[
          	'figures' => $figures,
         	'numberFigures' => count($figures)
         ]); 
-    }
-    
-    
-    
-    
-    
-    /**
-      * @Route("/show/{id}", name="show")
-      */
-    public function showold($id, Request $request, RemoveTagGenerator $removeTagGenerator)
-    {
-        $em = $this->getDoctrine()->getManager();
-        
-        $taskRepository = $this->getDoctrine()->getRepository(Task::class);
-        $tasks = $taskRepository->findby(array('id' => $id));
-        
-        $tagRepository = $this->getDoctrine()->getRepository(Tag::class);
-        $tags = $tagRepository->findAll();
-        
-        
-        $tagforms = array();
-        $tagformviews = array();
-        foreach($tasks as $task){
-			
-			$temp = $this->get("form.factory")->createNamedBuilder( $task->getId(), AddTagToTaskType::class, new Tag() );
-			$tempForm = $temp->getForm();
-			
-			$tagforms[] = $tempForm;
-			$tagformviews[] = $tempForm->createView();
-			
-			
-			
-			$tempRemove = $this->get("form.factory")->createNamedBuilder( $task->getId(), RemoveTaskType::class, new Task() );
-			$tempRemoveForm = $tempRemove->getForm();
-			
-			
-			$removetaskforms[] = $tempRemoveForm;
-			$removetaskformviews[] = $tempRemoveForm->createView();
-			
-			
-		}
-		foreach($tagforms as $tagform){
-        	$tagform->handleRequest($request);
-        	if ($tagform->isSubmitted() && $tagform->isValid()) {
-            	
-            	foreach($tasks as $task){
-            		if ($request->request->has($task->getId())) {
-            			$taskId = $task->getId();
-            		}
-            	}
-            	
-            	$tagtest = new Tag();
-            	$tagtest = $tagform->getData();
-            	
-            	$task = $taskRepository->findOneBy(['id' => $taskId]);
-            	if (!$task) { throw $this->createNotFoundException( 'No task found for id '. $taskId ); }
-            	
-            	$file = $tagtest->getImage();
- 				$fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
- 				$file->move( $this->getParameter('images_directory'), $fileName );
- 				$tagtest->setImage($fileName);
- 				
- 				
- 				$tagtest->setTask($task);
-            	$task->addTag($tagtest);
- 				
- 				$em->persist($tagtest);
- 				$em->persist($task);
- 				$em->flush();
-            	
- 				
-         	}
-        }
-        
-        
-        // $removetagforms = array();
-//         $removetagformviews = array();
-//         foreach($tags as $tag){
-// 			
-// 			$tagtempRemove = $this->get("form.factory")->createNamedBuilder( $tag->getId(), RemoveTagType::class, new Tag() );
-// 			$tagtempRemoveForm = $tagtempRemove->getForm();
-// 			
-// 			$removetagforms[$tag->getId()] = $tagtempRemoveForm;
-// 			$removetagformviews[$tag->getId()] = $tagtempRemoveForm->createView();
-// 			
-// 		}
-//         foreach($removetagforms as $removetagform){
-//         	$removetagform->handleRequest($request);
-//         	if($removetagform->isSubmitted() ) {
-//             	
-//             	foreach($tags as $tag){
-//             		if ($request->request->has($tag->getId())) {
-//             			$tagId = $tag->getId();
-//             		}
-//             	}
-//             	$tagToRemove = $tagRepository->findOneBy(['id' => $tagId ]);
-//             	if (!$tagToRemove) { throw $this->createNotFoundException( 'No tag found for id '. $tagId ); }
-//             	
-//  				$em->remove($tagToRemove);
-//  				$em->flush();
-//  				
-//  			}
-//         }
-        
-        $removeTagGenerator->getRemoveTagForm($tags);
-        
-        
-        
-        $modifytagforms = array();
-        $modifytagformviews = array();
-        foreach($tags as $tag){
-			
-			$tagtempModify = $this->get("form.factory")->createNamedBuilder( $tag->getId(), ModifyTagType::class, new Tag() );
-			$tagtempModifyForm = $tagtempModify->getForm();
-			
-			$modifytagforms[$tag->getId()] = $tagtempModifyForm;
-			$modifytagformviews[$tag->getId()] = $tagtempModifyForm->createView();
-			
-		}
-        foreach($modifytagforms as $modifytagform){
-        	$modifytagform->handleRequest($request);
-        	if($modifytagform->isSubmitted() ) {
-            	
-            	foreach($tags as $tag){
-            		if ($request->request->has($tag->getId())) {
-            			$tagId = $tag->getId();
-            		}
-            	}
-            	$tagtemp = $modifytagform->getData();
-            	$tagToModify = $tagRepository->findOneBy(['id' => $tagId ]);
-            	if (!$tagToModify) { throw $this->createNotFoundException( 'No tag found for id '. $tagId ); }
-            	
- 				
- 				
- 				$em->persist($tagToModify);
- 				$em->flush();
- 				
- 			}
-        }
-    
-        
-        
-		return $this->render('show.html.twig', array(
-			'tasks' => $tasks,
-			'tagformviews' => $tagformviews,
-			'removetagformviews' => $removetagformviews,
-			'modifytagformviews' => $modifytagformviews,
-		));
-        
     }
     
     
@@ -202,22 +53,26 @@ class FigureController extends Controller
         $figureRepository = $this->getDoctrine()->getRepository(Figure::class);
         $figures = $figureRepository->findAll();
         
+        
+        $snowboarderRepository = $this->getDoctrine()->getRepository(Snowboarder::class);
+        $session = $request->getSession();
+        $snowboarder = $snowboarderRepository->findOneby(array('id' => $session->get('id') ));
+        
+        
         $figure = new Figure();
         $tags = Array();
         $form = $this->createForm(FigureType::class, $figure);
-
-    	$form->handleRequest($request);
-
-    	if ($form->isSubmitted() && $form->isValid()) {
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
         	$figure = $form->getData();
         	
-        	//$figure->setCreatedAt();
         	$figure->setCreatedAt( new \DateTime('now') );
         	
         	$mainfile = $figure->getMainimage();
  			$mainfileName = $this->generateUniqueFileName().'.'.$mainfile->guessExtension();
  			$mainfile->move( $this->getParameter('images_directory'), $mainfileName );
  			$figure->setMainimage($mainfileName);
+ 			$figure->setSnowboarder($snowboarder);
         	
         	
         	$tags = $figure->getTags();
@@ -231,6 +86,8 @@ class FigureController extends Controller
         	
         	$em->persist($figure);
         	$em->flush();
+        	
+        	$this->addFlash('messages', 'Félicitation, vous venez de créer la figure ' . $figure->getName() . '!!' );
 
         	return $this->redirectToRoute('index');
     	}
@@ -273,14 +130,14 @@ class FigureController extends Controller
             	$tagtest = new Tag();
             	$tagtest = $tagform->getData();
             	
-            	//$task = $figureRepository->findOneBy(['id' => $figureId]);
-            	//if (!$task) { throw $this->createNotFoundException( 'No task found for id '. $figureId ); }
-            	
-            	$file = $tagtest->getImage();
- 				$fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
- 				$file->move( $this->getParameter('images_directory'), $fileName );
- 				$tagtest->setImage($fileName);
- 				
+            	if($tagtest->getImage()){
+            		$file = $tagtest->getImage();
+ 					$fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+ 					$file->move( $this->getParameter('images_directory'), $fileName );
+ 					$tagtest->setImage($fileName);
+ 				} else {
+ 					//image par défault
+ 				}
  				
  				$tagtest->setFigure($figure);
             	$figure->addTag($tagtest);
@@ -477,6 +334,40 @@ class FigureController extends Controller
 		$em->flush();
     	return $this->redirectToRoute('index');
 	}
+	
+	
+	
+	
+	
+	/**
+ 	* @Route("/search", name="search")
+ 	*/
+	public function search(Request $request){
+          
+        $repository = $this->getDoctrine()->getRepository(Figure::class);
+		$figures = array();
+		$figuresByDifficulty = array();
+		$figuresByName = array();
+		
+		$form = $this->createForm(SearchType::class, new Figure());
+		$form->handleRequest($request);
+		if ($form->isSubmitted()) {
+			$diffmin = $form->getData()->getDifficulty();
+			$name = $form->getData()->getName();
+			
+			$figuresByDifficulty = $repository->findAllMoreDifficultThan($diffmin);
+			
+			$figuresByName = $repository->findAllWhoseCreatorIs($name);
+			
+			$figures = array_merge($figuresByDifficulty, $figuresByName);
+		}
+		
+        return $this->render('accueil/search.html.twig', 
+		[
+         	'form' => $form->createView(),
+         	'figures' => $figures
+        ]); 
+    }
     
     
     

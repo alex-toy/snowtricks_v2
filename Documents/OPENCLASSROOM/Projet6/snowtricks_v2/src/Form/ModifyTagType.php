@@ -31,9 +31,12 @@ class ModifyTagType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        	->add('explanation')
-        	->add('image', FileType::class, array('label' => 'Image (jpg file)'))
-        	->add('save', SubmitType::class, array('label' => 'Modify tag'));
+        	->add('explanation', TextareaType::class)
+        	->add('image', FileType::class)
+        	->add('video', FileType::class)
+        	->add('save', SubmitType::class);
+        	
+        	
     }
 
     public function configureOptions(OptionsResolver $resolver)

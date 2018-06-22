@@ -155,6 +155,24 @@ class Snowboarder
     
     
     
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Figure", mappedBy="snowboarder", orphanRemoval=true, cascade={"persist"})
+     */
+    private $figures;
+    /**
+     * @return Collection|Figure[]
+     */
+    public function getFigures()
+    {
+        return $this->figures;
+    }
+    
+    
+    
+    
+    
+    
 }
 
 

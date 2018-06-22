@@ -43,13 +43,8 @@ class FigureType extends AbstractType
         		'10' => 10,
     		),
 			))
-		->add('mainimage', FileType::class, array('label' => 'Image (jpg file)'))
-        ->add('tags', CollectionType::class, array(
-        	'entry_type' => TagType::class,
-        	'entry_options' => array('label' => false),
-        	'allow_add' => true,
-        	'by_reference' => false,
-    	))
+		->add('mainimage', FileType::class)
+        //->add('tags', CollectionType::class, array( 'entry_type' => TagType::class, 'entry_options' => array('label' => false),'allow_add' => true,'by_reference' => false,))
         ->add('save', SubmitType::class, array('label' => 'Create figure'));
         
     }

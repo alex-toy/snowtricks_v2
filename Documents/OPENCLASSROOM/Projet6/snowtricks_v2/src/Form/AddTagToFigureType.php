@@ -15,10 +15,17 @@ class AddTagToFigureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('explanation',     TextareaType::class, array( 'attr' => array('class' => 'form-control mb-10')))
-        ->add('image', FileType::class, array('label' => 'Image (jpg file)'))
-        ->add('video', FileType::class, array('label' => 'Video (mp4 file)'))
-        ->add('save', SubmitType::class, array( 'attr' => array('label' => 'Add Tag', 'class' => 'primary-btn mt-20')));
+        	->add('explanation', TextareaType::class)
+        	->add('image', FileType::class)
+        	->add('video', FileType::class)
+        	->add('save', SubmitType::class);
+        
+        
+        
+        //->add('explanation',     TextareaType::class, array( 'attr' => array('class' => 'form-control mb-10')))
+        //->add('image', FileType::class, array('label' => 'Image (jpg file)'))
+        //->add('video', FileType::class, array('label' => 'Video (mp4 file)'))
+        //->add('save', SubmitType::class, array( 'attr' => array('label' => 'Add Tag', 'class' => 'primary-btn mt-20')));
         
      }
 

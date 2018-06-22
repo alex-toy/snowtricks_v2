@@ -144,6 +144,25 @@ class Figure
     
     
     
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Snowboarder", inversedBy="figures")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $snowboarder;
+    
+    public function getSnowboarder(): Snowboarder
+    {
+        return $this->snowboarder;
+    }
+    public function setSnowboarder(Snowboarder $snowboarder)
+    {
+        $this->snowboarder = $snowboarder;
+    }
+    
+    
+    
    
     
     public function __construct()

@@ -31,7 +31,7 @@ class Tag
     
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\File(mimeTypes={ "image/jpeg" })
      */
@@ -51,7 +51,7 @@ class Tag
     
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Assert\File(mimeTypes={ "video/mp4" })
      */

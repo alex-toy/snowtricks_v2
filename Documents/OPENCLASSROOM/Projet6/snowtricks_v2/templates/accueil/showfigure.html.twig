@@ -17,6 +17,7 @@
 
 
 
+
 <header class="masthead">
       
     
@@ -25,18 +26,12 @@
         <div class="row h-100">
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
-                            
-   
-    
-    
-         
-                
-                
-                
-                
+               
                 
 <div class="whole-wrap pb-100">
 	<div class="container">
+        
+        
         
         {% for tag in figure.tags %}
         <div class="container">
@@ -47,16 +42,16 @@
 							<div class="col-md-8">
 								<p class="text-right">{{ tag.explanation }}</p>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
 							</div>
 						</div>
 					</div>
             {% else %}
             <div class="section-top-border">
-						<h3 class="mb-30">étape : {{ loop.index }}</h3>
+						<h3 class="mb-30">étape {{ loop.index }}</h3>
 						<div class="row">
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
 							</div>
 							<div class="col-md-8 mt-sm-20">
@@ -65,6 +60,7 @@
 						</div>
 					</div>
             {% endif %}
+            
             {% if app.session.get('sessionId') %}
             
             {% if removetagformviews[tag.id] is defined %}
@@ -78,10 +74,50 @@
             
 
             <div id="{{'modifytagform'~tag.id}}" style="display:none;">
-            {{ form_start(modifytagformviews['modif'~tag.id]) }}
-                    {{ form_row(modifytagformviews['modif'~tag.id].explanation) }}
+            {{ form_start(modifytagformviews['modif'~tag.id], {'attr': {'class': 'mui-form'}}) }}
+                
+                <div class="mui-textfield mui-textfield--float-label">
+                    {{ form_widget(modifytagformviews['modif'~tag.id].explanation, { 'attr': {'type': 'text'} }) }}
+                    {{ form_label(modifytagformviews['modif'~tag.id].explanation, 'My new explanation') }}
+                </div>
+                
+                <label id="{{'switch_'~tag.id}}" class="switch" onchange="{{'switchImageVideo_'~tag.id}}(this)">
+                    <input id="{{'checkbox_'~tag.id}}" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+
+
+                <div id="{{'image_'~tag.id}}">Image :
                     {{ form_row(modifytagformviews['modif'~tag.id].image) }}
-                    {{ form_row(modifytagformviews['modif'~tag.id].save) }}
+                </div>
+                <script>document.getElementById("{{'modif'~tag.id~'_image'}}").required = false</script>
+
+                <div id="{{'video_'~tag.id}}">Vidéo :
+                    {{ form_row(modifytagformviews['modif'~tag.id].video) }}
+                </div>
+                <script>document.getElementById("{{'modif'~tag.id~'_video'}}").required = false</script>
+                
+                <script>
+                    var {{'checkbox_'~tag.id}} = document.getElementById("{{'checkbox_'~tag.id}}");
+                    var {{'imageForm_'~tag.id}} = document.getElementById("{{'image_'~tag.id}}");
+                    var {{'videoForm_'~tag.id}} = document.getElementById("{{'video_'~tag.id}}");
+                    {{'videoForm_'~tag.id}}.style.display = "none";
+                    function {{'switchImageVideo_'~tag.id}}() {
+                        if ({{'checkbox_'~tag.id}}.checked) {
+                            console.log('test2', {{'checkbox_'~tag.id}}.checked)
+                            {{'videoForm_'~tag.id}}.style.display = "none";
+                            {{'imageForm_'~tag.id}}.style.display = 'block';
+                        } else {
+                            console.log('test2', {{'checkbox_'~tag.id}}.checked)
+                            {{'videoForm_'~tag.id}}.style.display = 'block';
+                            {{'imageForm_'~tag.id}}.style.display = "none";
+                        }
+                    }
+                </script>
+                
+                
+                {{ form_widget(modifytagformviews['modif'~tag.id].save, {'attr': {'class': 'mui-btn mui-btn--raised', 'label': 'Click me'}}) }}
+                
             {{ form_end(modifytagformviews['modif'~tag.id]) }}
             </div>
 
@@ -100,36 +136,64 @@
             
             {% endif %}
 		</div>
+        
+        
+        <div class="mui--divider-top">
+            
+        
         {% endfor %}
         
         
-    
-      
+        <div class="mui-appbar"> Add new tags </div>
         
-   </div> 
-</div>
-                
-                <br>
-	
-
-	             
-                
-                
-
-
-                  
+        
+        {{ form_start(tagformview, {'attr': {'class': 'mui-form'}}) }}
             
-              </div>
-          </div>
-         
-        </div>
-      </div>
-</header>
-
-
-
-	
-
+            
+            <div class="mui-textfield mui-textfield--float-label">
+                {{ form_widget(tagformview.explanation, { 'attr': {'type': 'text'} }) }}
+                {{ form_label(tagformview.explanation, 'My explanation') }}
+            </div>
+        
+        
+            <label id="switch" class="switch" onchange="switchImageVideo(this)">
+                <input type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        
+        
+            <div id="image">Image :
+                {{ form_widget(tagformview.image, { 'attr': {'type': 'text'} }) }}
+            </div>
+            <script>document.getElementById("_image").required = false</script>
+        
+            <div id="video">Vidéo :
+                {{ form_widget(tagformview.video, { 'attr': {'type': 'text'} }) }}
+            </div>
+            <script>document.getElementById("_video").required = false</script>
+        
+        
+            {{ form_widget(tagformview.save, {'attr': {'class': 'mui-btn mui-btn--raised'}}) }}
+        
+            
+        {{ form_end(tagformview) }}
+        <script>
+            var checkbox = document.querySelectorAll("label#switch > input")[0];  
+            var imageForm = document.getElementById("image");
+            var videoForm = document.getElementById("video");
+            videoForm.style.display = "none";
+            function switchImageVideo() {
+                if (checkbox.checked) {
+                    videoForm.style.display = "none";
+                    imageForm.style.display = 'block';
+                } else {
+                    videoForm.style.display = 'block';
+                    imageForm.style.display = "none";
+                }
+            }
+        </script>
+        
+        
 <!-- Start comment-sec Area -->
 <section class="comment-sec-area pt-80 pb-80">
     <div class="container">
@@ -163,42 +227,43 @@
     </div>    
 </section>
 <!-- End comment-sec Area -->
-
-
-
-
-
-
+        
+        
+        
 <!-- Start commentform Area -->
 {% if app.session.get('sessionId') %}
-<section class="commentform-area  pb-120 pt-80 mb-100">
-    <div class="container">
-        <h5 class="text-uppercas pb-50">Add a comment</h5>
-        <div class="row flex-row d-flex">
-            <div class="col-lg-6">
-                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                {{ form_errors(form) }}
-                
-                
-                {{ form_label(form.contenu, 'Your message', { 'label_attr': {'class': 'form-control mb-10'} }) }}
-                {{ form_errors(form.contenu) }}
-                
-                
-                {{ form_widget(form.contenu, {'attr': {'class': 'primary-btn mt-20'}}) }}
-                
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>    
-</section>
+{{ form_start(form, {'attr': {'class': 'mui-form'}}) }}
+    
+    {{ form_errors(form) }}
+        
+    <div class="mui-textfield mui-textfield--float-label">
+        {{ form_widget(form.contenu, { 'attr': {'type': 'text'} }) }}
+        {{ form_label(form.contenu, 'My comment') }}
+    </div>
+
+    {{ form_widget(form.save, {'attr': {'class': 'mui-btn mui-btn--raised'}}) }}
+
+{{ form_end(form) }}
 {% else %}
     <div class="col-lg-12 encart">
         <p>Connectez-vous pour pouvoir poster un commentaire.</p>
     </div>
 {% endif %}                
 <!-- End commentform Area -->
-
-
+        
+        
+        
+        
+        
+   </div> 
+</div>
+                     
+            
+              </div>
+          </div>
+        </div>
+      </div>
+</header>
 
 
 {% endblock %}

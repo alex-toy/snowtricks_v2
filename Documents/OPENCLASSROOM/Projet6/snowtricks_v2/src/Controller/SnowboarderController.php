@@ -84,7 +84,7 @@ class SnowboarderController extends Controller
     	$formSnowboarder = $this->createFormBuilder($Snowboarder)
         ->add('name',     TextType::class)
         ->add('password',     PasswordType::class)
-		->add('Se connecter',      SubmitType::class)
+		->add('connect',      SubmitType::class)
         ->getForm();
 		$formSnowboarder->handleRequest($request);
 		if ($formSnowboarder->isSubmitted() ) {

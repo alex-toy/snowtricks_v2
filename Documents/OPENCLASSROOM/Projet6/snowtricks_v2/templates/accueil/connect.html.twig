@@ -4,49 +4,52 @@
 
 
 {% block presentation %}
-{% include 'accueil/other/accroche_v1.html.twig' %}
+{% include 'accueil/other/accroche_connect.html.twig' %}
 {% endblock %}
 
 
 
 
 {% block body %}
-<h3>Formulaire de connexion</h3>
 
-<div class="well">
-  {{ form_start(formSnowboarder, {'attr': {'class': 'form-horizontal'}}) }}
-
-  {# Les erreurs générales du formulaire. #}
-  {{ form_errors(formSnowboarder) }}
+<div id="form_ancre"></div>
 
 
-  
+
+
+<div class="container">
+
+
+ {{ form_start(formSnowboarder, {'attr': {'class': 'mui-form'}}) }}
+
+    <h3>Formulaire de connexion</h3>
+
     {# nom #}
-  <div class="form-group">
-    {{ form_label(formSnowboarder.name, "Nom", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(formSnowboarder.name) }}
-
-    <div class="col-sm-10">
-      {# Génération de l'input. #}
-      {{ form_widget(formSnowboarder.name, {'attr': {'class': 'form-control'}}) }}
+    <div class="mui-textfield mui-textfield--float-label">
+        {{ form_widget(formSnowboarder.name, { 'attr': {'type': 'text'} }) }}
+        {{ form_label(formSnowboarder.name, 'Nom') }}
     </div>
-  </div>
+    
+    
 
-    
-    
     {# password #}
-  <div class="form-group">
-    {{ form_label(formSnowboarder.password, "password", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-    {{ form_errors(formSnowboarder.password) }}
-    <div class="col-sm-10">
-      {{ form_widget(formSnowboarder.password, {'attr': {'class': 'form-control'}}) }}
+    <div class="mui-textfield mui-textfield--float-label">
+        {{ form_widget(formSnowboarder.password, { 'attr': {'type': 'text'} }) }}
+        {{ form_label(formSnowboarder.password, 'Password') }}
     </div>
-  </div>
+    
+    
+    
+    
+    {{ form_widget(formSnowboarder.connect, {'attr': {'class': 'mui-btn mui-btn--raised'}}) }}
     
     
     <a href="http://127.0.0.1:8000/forgotPassword">I forgot my password, so silly of me...</a>
     
+     
+    {{ form_end(formSnowboarder) }}
 
-  {{ form_end(formSnowboarder) }}
 </div>
+
+
 {% endblock %}

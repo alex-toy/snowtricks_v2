@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block presentation %}
+{% include 'accueil/other/accroche_search.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+
+<div id="form_ancre"></div>
+
+
+<div class="container">
+
+{{ form_start(form, {'attr': {'class': 'mui-form'}}) }}
+    
+                        {# difficulty de la figure #}
+                        <div class="mui-select">
+                            {{ form_widget(form.difficulty) }}
+                            {{ form_label(form.difficulty, 'Difficulty of the figure') }}
+                        </div>
+    
+                        
+    
+                        {# name de la figure #}
+                        <div class="mui-textfield mui-textfield--float-label">
+                            {{ form_widget(form.name, { 'attr': {'type': 'text'} }) }}
+                            {{ form_label(form.name, 'Name of the author') }}
+                        </div>
+    
+                    
+                        {{ form_widget(form.save, {'attr': {'class': 'mui-btn mui-btn--raised'}}) }}
+                        {{ form_label(form.save, 'Find all figures') }}
+     
+{{ form_end(form) }}
+
+
+
+</div>
+
+
+
+<!-- Encarts figures -->
+<section class="fashion-area section-gap" id="fashion">
+				<div class="container">
+					
+                    
+                    <div>{{figures|length}} figures were found</div>
+                    
+                    
+                    <div class="row">
+						
+                        {% for figure in figures %}
+                        <div class="figure_min col-lg-3 col-md-6 single-fashion">
+							<img class="img-fluid" src="/uploads/images/{{ figure.mainimage }}" alt=""> 
+							<p class="date">Créée le {{ figure.createdAt|date("m/d/Y") }}</p>
+							<h4><a href="/figure/{{ figure.id }}">{{ figure.name }}</a></h4>
+							<p>
+								{{ figure.description|slice(0, 10) ~ " ..." }}
+							</p>
+							
+                            <div class="meta-bottom d-flex justify-content-between">
+								
+                                {% if app.session.get('sessionId') %}
+                                    
+                                    <a href="http://127.0.0.1:8000/modifyfigure/{{ figure.id }}"><span class="lnr lnr-heart glyphicon glyphicon-pencil"></span></a>
+                                
+                                
+                                
+                                    <a href="http://127.0.0.1:8000/deletefigure/{{ figure.id }}"><span class="lnr lnr-bubble glyphicon glyphicon-trash"></span></a>
+                                
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %} 
+						
+                        						
+					
+                    </div>
+				</div>	
+			</section>
+<!-- End Encarts figures -->
+
+
+
+
+
+
+{% endblock %}    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

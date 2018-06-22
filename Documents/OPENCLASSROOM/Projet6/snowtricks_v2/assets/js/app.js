@@ -9,6 +9,10 @@ require('../css/magnific-popup.css');
 require('../css/main.css');
 require('../css/nice-select.css');
 require('../css/owl.carousel.css');
+require('../css/switch.css');
+
+require('../css/mui-rtl.css');
+require('../css/mui.css');
 
 
 
@@ -33,7 +37,7 @@ require('./js/vendor/bootstrap.min.js');
 
 
 
-
+require('./js/mui.js');
 			
 			
 			
