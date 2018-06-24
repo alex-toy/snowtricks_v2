@@ -15,6 +15,9 @@ require('../css/mui-rtl.css');
 require('../css/mui.css');
 
 
+require('../css/modalwindow.css');
+
+
 
 var $ = require('jquery');
 var addtag = require('./js/addtag');
@@ -38,9 +41,17 @@ require('./js/vendor/bootstrap.min.js');
 
 
 require('./js/mui.js');
+
+
+
+require('./js/todo.js');
+require('./js/project.js');
+require('./js/project-list.js');
+
+
 			
 			
-			
+require('./js/test.js');
 			
 			
 			

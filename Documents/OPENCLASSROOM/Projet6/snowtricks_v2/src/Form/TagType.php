@@ -18,7 +18,6 @@ class TagType extends AbstractType
         $builder
         ->add('explanation', TextareaType::class)
         ->add('image', FileType::class)
-        ->add('video', FileType::class)
         ->add('save', SubmitType::class);
     }
 

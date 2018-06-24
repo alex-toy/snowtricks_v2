@@ -52,6 +52,17 @@
     {{ form_widget(form.mainimage) }}
     
     
+    <h3>Add the tags</h3>
+    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}">
+        {% for tag in form.tags %}
+            <li>
+                {{ form_row(tag.explanation) }}
+                {{ form_row(tag.image) }}
+            </li>
+        {% endfor %}
+    </ul>
+    
+    
      
     {{ form_widget(form.save, {'attr': {'class': 'mui-btn mui-btn--raised'}}) }}
     

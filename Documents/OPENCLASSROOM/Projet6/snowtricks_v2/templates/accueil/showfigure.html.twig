@@ -15,6 +15,13 @@
 {% block body %}
 
 
+<script>
+
+                
+
+
+</script>
+
 
 
 
@@ -43,7 +50,7 @@
 								<p class="text-right">{{ tag.explanation }}</p>
 							</div>
 							<div class="col-md-3">
-								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
+								<img onclick="{{'displayModal_'~tag.id}}()" id="{{'img_'~tag.id}}" class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
 							</div>
 						</div>
 					</div>
@@ -52,7 +59,7 @@
 						<h3 class="mb-30">étape {{ loop.index }}</h3>
 						<div class="row">
 							<div class="col-md-3">
-								<img class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
+								<img onclick="{{'displayModal_'~tag.id}}()" id="{{'img_'~tag.id}}" class="img-fluid" src="/uploads/images/{{ tag.image }}" alt=""  />
 							</div>
 							<div class="col-md-8 mt-sm-20">
 								<p>{{ tag.explanation }}</p>
@@ -136,6 +143,53 @@
             
             {% endif %}
 		</div>
+        
+        
+        
+        
+        <!-- flash ====================================================-->
+        <div id="{{'Modal_'~tag.id}}" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <span class="close">&times;</span>
+              <h2>Nom de la figure : {{ figure.name }}</h2>
+            </div>
+            <div class="modal-body">
+              <img class="img-fluid modal-image" src="/uploads/images/{{ tag.image }}" alt=""/>
+            </div>
+            <div class="modal-footer">
+              <h3>étape {{ loop.index }}</h3>
+            </div>
+          </div>
+
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        <script>
+                var {{'Modal_'~tag.id}} = document.getElementById("{{'Modal_'~tag.id}}");
+                var {{'img_'~tag.id}} = document.getElementById("{{'img_'~tag.id}}");
+                    
+                {{'Modal_'~tag.id}}.style.display = "none";
+                     
+                function {{'displayModal_'~tag.id}}(imageId, modalId){
+                    {{'Modal_'~tag.id}}.style.display = "block";
+                    {{'Modal_'~tag.id}}.onclick = function() {
+                        {{'Modal_'~tag.id}}.style.display = "none";
+                    }
+                } 
+        </script>  
+        
         
         
         <div class="mui--divider-top">
@@ -264,6 +318,13 @@
         </div>
       </div>
 </header>
+    
+    
+
+
+
+
+    
 
 
 {% endblock %}
